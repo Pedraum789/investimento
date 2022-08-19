@@ -21,16 +21,18 @@ def transformColumnsToNumbers(data):
     data = data.replace(np.nan, 0, regex=True)
     return data
 
+def main():
 
-headers = {'user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'}
-req = requests.get('https://fundamentus.com.br/fii_resultado.php', headers=headers)
+    headers = {'user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'}
+    req = requests.get('https://fundamentus.com.br/fii_resultado.php', headers=headers)
 
-if req.status_code == 200:
-    content = req.content
-    soup = BeautifulSoup(content, 'html.parser')
-    tabela = soup.find(name = 'table')
-    table_str = str(tabela)
-    df = pd.read_html(table_str)[0]
-    df = transformColumnsToNumbers(df)
+    if req.status_code == 200:
+        content = req.content
+        soup = BeautifulSoup(content, 'html.parser')
+        tabela = soup.find(name = 'table')
+        table_str = str(tabela)
+        df = pd.read_html(table_str)[0]
+        df = transformColumnsToNumbers(df)
     
-    print('ok')
+if __name__ == '__main__':
+    main()
