@@ -6,27 +6,38 @@ from bs4 import BeautifulSoup
 
 def transformColumnsToNumbers(data):
     
+    
     data['Cotação'] = pd.to_numeric(data['Cotação'].str.replace('.', '').str.replace(',','.'))
+    
     
     data['FFO Yield'] = pd.to_numeric( data['FFO Yield'].str.replace('.','').str.rstrip('%').str.replace(',', '.'), errors='coerce')
     
+    # Porcentagem de ganho anual
     data['Dividend Yield'] = pd.to_numeric( data['Dividend Yield'].str.replace('.','').str.rstrip('%').str.replace(',', '.'), errors='coerce')
+    
     # Porcentagem de ganho mensal
     data['Dividendo Mensal'] = ((1 + (data['Dividend Yield'] / 100)) ** (1/12) - 1) * 100
     
+    # Preco da acao por valor do patrimonio liquido
     data['P/VP'] = pd.to_numeric( data['P/VP'])
+    
     #Valor de Mercado
     data['Valor de Mercado'] = pd.to_numeric( data['Valor de Mercado'].str.replace('.','').str.replace(',', '.'), errors='coerce')
     
+    #Liquidez
     data['Liquidez'] = pd.to_numeric( data['Liquidez'].str.replace('.','').str.replace(',', '.'), errors='coerce')
+    
     #Quantidade de Imoveis
     data['Qtd de imóveis'] = pd.to_numeric( data['Qtd de imóveis'])
+    
     #Preco por Metro Quadrado
     data['Preço do m2'] = pd.to_numeric( data['Preço do m2'].str.replace('.','').str.replace(',', '.'), errors='coerce')
     
+    # Aluguel por M2
     data['Aluguel por m2'] = pd.to_numeric( data['Aluguel por m2'].str.replace('.','').str.replace(',', '.'), errors='coerce')
     
     data['Cap Rate'] = pd.to_numeric( data['Cap Rate'], errors='coerce')
+    
     # O quanto esta alugado
     # Ex: Ele tem 100 lugares para alugar e 30 esta sem alugar, a vacancia vai ser de 30%
     data['Vacância Média'] = pd.to_numeric( data['Vacância Média'], errors='coerce')
