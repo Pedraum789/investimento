@@ -101,23 +101,14 @@ def main():
         df = pd.read_html(table_str)[0]
         df = transformColumnsToNumbers(df)
         df = renameColumn(df)
-        df = filters(df)
-        
-        
+        print(df)
 
-'''
-fig, ax = plt.subplots(1,1)
-data=[[1,2,3],
-      [5,6,7],
-      [8,9,10]]
-column_labels=["Column 1", "Column 2", "Column 3"]
-ax.axis('tight')
-ax.axis('off')
-ax.table(cellText=data,colLabels=column_labels,loc="center")
-
-plt.show()
-
-'''
+def plotTable(df):
+    fig, ax = plt.subplots(1,1)
+    ax.axis('tight')
+    ax.axis('off')
+    ax.table(cellText= df.values, colLabels= df.columns, loc= "center")
+    plt.show()
 
 if __name__ == '__main__':
     main()
